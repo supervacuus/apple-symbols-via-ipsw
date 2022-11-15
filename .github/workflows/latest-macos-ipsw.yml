@@ -2,3 +2,12 @@ name: ispw-download
 
 on:
   workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: macos-latest
+    name: "download"
+    steps:
+      - name: Update brew
+        run: |
+          brew update
