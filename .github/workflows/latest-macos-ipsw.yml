@@ -1,0 +1,4 @@
+name: ispw-download
+
+on:
+  workflow_dispatch:
