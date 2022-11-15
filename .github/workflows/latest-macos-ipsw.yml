@@ -8,6 +8,25 @@ jobs:
     runs-on: macos-latest
     name: "download"
     steps:
-      - name: Update brew
+      - name: Install IPSW
         run: |
+          set -eou pipefail
           brew update
+          brew install blacktop/tap/ipsw
+      - name: Install symsorter
+        run: |
+          set -eou pipefail
+          curl -L https://github.com/getsentry/symbolicator/releases/download/0.5.1/symsorter-Darwin-universal > symsorter
+          chmod +x symsorter
+      - name: ISPW download
+        run: |
+          ipsw download ipsw --build 22A400
+      - name: IPSW extract dyld_shared_cache
+        run: |
+          ipsw extract UniversalMac_13.0.1._22A400_Restore.ipsw -d
+      - name: ISPW split dyld_shared_cache
+        run: |
+          ipsw dyld split 22A400__Mac13,1_2_Mac14,2_7_MacBookAir10,1_MacBookPro17,1_MacBookPro18,1_2_3_4_Macmini9,1_VirtualMac2,1_iMac21,1_2/dyld_shared_cache_arm64e symsorter_input 
+      - name: IPSW symsort split dyld_shared_cache files
+        run: |
+          ./symsorter -zz -o symsort_output --prefix macos --bundle-id 13.0.1_22A00_arm64e symsorter_input
