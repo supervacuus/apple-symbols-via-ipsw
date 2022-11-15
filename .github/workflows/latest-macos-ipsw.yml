@@ -20,10 +20,18 @@ jobs:
           chmod +x symsorter
       - name: ISPW download
         run: |
+          ls -la
+          pwd
           ipsw download ipsw --build 22A400
+          ls -la
+          pwd
       - name: IPSW extract dyld_shared_cache
         run: |
+          ls -la
+          pwd
           ipsw extract UniversalMac_13.0.1._22A400_Restore.ipsw -d
+          ls -la
+          pwd
       - name: ISPW split dyld_shared_cache
         run: |
           ipsw dyld split 22A400__Mac13,1_2_Mac14,2_7_MacBookAir10,1_MacBookPro17,1_MacBookPro18,1_2_3_4_Macmini9,1_VirtualMac2,1_iMac21,1_2/dyld_shared_cache_arm64e symsorter_input 
