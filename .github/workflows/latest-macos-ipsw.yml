@@ -29,7 +29,7 @@ jobs:
         run: |
           ls -la
           pwd
-          ipsw extract UniversalMac_13.0.1._22A400_Restore.ipsw -d
+          ipsw extract UniversalMac_13.0.1_22A400_Restore.ipsw -d
           ls -la
           pwd
       - name: ISPW split dyld_shared_cache
