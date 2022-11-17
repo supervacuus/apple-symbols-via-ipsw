@@ -20,7 +20,7 @@ jobs:
           chmod +x symsorter
       - name: OTA download
         run: |
-          ipsw download ota --platform ios --version 16.1.1 --device iPhone15,3 --dyld
+          ipsw download ota --platform ios --version 16.1.1 --device iPhone15,3
 #      - name: OTA extract dyld_shared_cache
 #        run: |
 #          ipsw extract UniversalMac_13.0.1_22A400_Restore.ipsw -d -a arm64e
