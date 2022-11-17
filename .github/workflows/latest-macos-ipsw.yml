@@ -1,4 +1,4 @@
-name: ispw-download
+name: ipsw-download
 
 on:
   workflow_dispatch:
