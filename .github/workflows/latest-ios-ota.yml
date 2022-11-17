@@ -18,7 +18,7 @@ jobs:
           set -eou pipefail
           curl -L https://github.com/getsentry/symbolicator/releases/download/0.5.1/symsorter-Darwin-universal > symsorter
           chmod +x symsorter
-      - name: OTA download
+      - name: OTA download (this is useless WIP right now)
         run: |
           set -eou pipefail
           ipsw device-list
