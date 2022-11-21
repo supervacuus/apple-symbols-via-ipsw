@@ -1,0 +1,35 @@
+name: ios-ota-download
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: macos-12
+    name: "download"
+    steps:
+      - name: Install IPSW
+        run: |
+          set -eou pipefail
+          brew update
+          brew install blacktop/tap/ipsw
+      - name: Install symsorter
+        run: |
+          set -eou pipefail
+          curl -L https://github.com/getsentry/symbolicator/releases/download/0.5.1/symsorter-Darwin-universal > symsorter
+          chmod +x symsorter
+      - name: OTA download 
+        run: |
+          ipsw download ota --platform ios --version 16.1.1 --device iPhone15,3
+      - name: Patch OTA cryptex files 
+        run: |
+          ipsw ota patch iOS16.1.1_OTAs/iPhone15,3_6d4aca783e86d1cfeb5de68bdc9611f1d58341d4.zip
+      - name: Mount SystemOS image 
+        run: |
+          hdiutil mount 20B101__iPhone15,3/SystemOS/078-65147-111.dmg
+      - name: Split dyld_shared_cache
+        run: |
+          ipsw dyld split /Volumes/SydneyB20B101.D74SystemCryptex/System/Library/Caches/com.apple.dyld/dyld_shared_cache_arm64e symsorter_input
+      - name: symsort split dyld_shared_cache files
+        run: |
+          ./symsorter -zz -o symsorter_output --prefix ios --bundle-id 16.1.1_20B101_arm64e symsorter_input
