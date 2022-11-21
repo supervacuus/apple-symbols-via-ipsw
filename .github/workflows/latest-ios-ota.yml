@@ -21,7 +21,7 @@ jobs:
       - name: OTA download 
         run: |
           ipsw download ota --platform ios --version 16.1.1 --device iPhone15,3
-      - name: Patch OTA cryptex files 
+      - name: Patch OTA cryptex files # fails due to MacOS 13 dependency
         run: |
           ipsw ota patch iOS16.1.1_OTAs/iPhone15,3_6d4aca783e86d1cfeb5de68bdc9611f1d58341d4.zip
       - name: Mount SystemOS image 
